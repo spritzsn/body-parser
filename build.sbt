@@ -1,6 +1,6 @@
 name := "json"
 
-version := "0.1.0-pre.1"
+version := "0.1.0-pre.2"
 
 scalaVersion := "3.1.3"
 
@@ -38,7 +38,7 @@ homepage := Some(url("https://github.com/edadma/" + name.value))
 //libraryDependencies += "org.scalatest" %%% "scalatest" % "3.2.13" % "test"
 
 libraryDependencies ++= Seq(
-  "io.github.spritzsn" %%% "spritz" % "0.1.0-pre.1",
+  "io.github.spritzsn" %%% "spritz" % "0.1.0-pre.3",
 )
 
 publishMavenStyle := true

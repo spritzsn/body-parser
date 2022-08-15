@@ -1,23 +1,22 @@
 package io.github.spritzsn.json
 
 import scala.annotation.tailrec
-import scala.collection.immutable
 import scala.collection.mutable.ListBuffer
-
 import scala.collection.mutable
-import io.github.spritzsn.spritz.{DMap, HandlerResult, Request, MiddlewareHandler, Response}
+import io.github.spritzsn.spritz.{DMap, HandlerResult, MiddlewareHandler, Request, Response}
 
+import scala.collection.immutable
+import scala.collection.immutable.VectorMap
 import scala.io.Codec
 
 object JSON extends MiddlewareHandler:
   def apply(req: Request, res: Response): HandlerResult =
     req.headers get "content-type" match
       case Some("application/json") =>
-        req.body = new DMap(
-          new mutable.HashMap().addAll(
-            parse(new String(Codec.fromUTF8(req.payload))).asInstanceOf[Map[String, Any]],
-          ),
-        )
+        val json = new String(Codec.fromUTF8(req.payload))
+        val obj = parse(json).eval.asInstanceOf[VectorMap[String, Any]] to mutable.LinkedHashMap
+
+        req.body = new DMap(obj)
       case _ =>
 
     HandlerResult.Next
@@ -139,7 +138,7 @@ object JSON extends MiddlewareHandler:
         elem()
 
       delim('}')
-      JObject(buf to immutable.VectorMap)
+      JObject(buf to VectorMap)
     }
 
     def error(str: String) = sys.error(str)
