@@ -1,6 +1,6 @@
-name := "-template"
+name := "json"
 
-version := "0.1.0"
+version := "0.1.0-pre.1"
 
 scalaVersion := "3.1.3"
 
@@ -36,6 +36,10 @@ licenses := Seq("ISC" -> url("https://opensource.org/licenses/ISC"))
 homepage := Some(url("https://github.com/edadma/" + name.value))
 
 //libraryDependencies += "org.scalatest" %%% "scalatest" % "3.2.13" % "test"
+
+libraryDependencies ++= Seq(
+  "io.github.spritzsn" %%% "spritz" % "0.1.0-pre.1",
+)
 
 publishMavenStyle := true
 
