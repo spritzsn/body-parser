@@ -2,6 +2,8 @@ name := "json"
 
 version := "0.1.0-pre.4"
 
+versionScheme := Some("early-semver")
+
 scalaVersion := "3.1.3"
 
 enablePlugins(ScalaNativePlugin)
@@ -23,7 +25,7 @@ scalacOptions ++= Seq(
 
 organization := "io.github.spritzsn"
 
-githubOwner := "edadma"
+githubOwner := "spritzsn"
 
 githubRepository := name.value
 
