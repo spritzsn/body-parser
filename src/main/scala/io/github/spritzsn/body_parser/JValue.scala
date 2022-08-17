@@ -1,4 +1,4 @@
-package io.github.spritzsn.json
+package io.github.spritzsn.body_parser
 
 import scala.collection.immutable.VectorMap
 
