@@ -45,6 +45,7 @@ def urlencoded(): RequestHandler2 =
         val parser = new FormParser
 
         req.payload foreach (b => parser.send(b))
+        parser.send(-1)
         req.body = new DMap(parser.data)
       case _ =>
 
