@@ -46,7 +46,7 @@ def json(): RequestHandler2 =
   (req: Request, res: Response) =>
     req.headers get "content-type" match
       case Some("application/json") =>
-        val json = new String(Codec.fromUTF8(req.payload))
+        val json = new String(Codec.fromUTF8(decompress(req)))
         val obj = parse(json).eval.asInstanceOf[VectorMap[String, Any]] to mutable.LinkedHashMap
 
         req.body = new DMap(obj)

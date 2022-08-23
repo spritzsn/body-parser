@@ -32,10 +32,11 @@ class FormParser extends Machine:
     override def exit(): Unit = data(key) = urlDecode(buf.toString)
 
     val on = {
-      case -1  => transition(FINAL)
-      case '&' => transition(keyState)
-      case '=' => parseError
-      case c   => buf += c.toChar
+      case -1   => transition(FINAL)
+      case '&'  => transition(keyState)
+      case '\n' =>
+      case '='  => parseError
+      case c    => buf += c.toChar
     }
 
 def urlencoded(): RequestHandler2 =
@@ -44,7 +45,7 @@ def urlencoded(): RequestHandler2 =
       case Some("application/x-www-form-urlencoded") =>
         val parser = new FormParser
 
-        req.payload foreach (b => parser.send(b))
+        decompress(req) foreach (b => parser.send(b))
         parser.send(-1)
         req.body = new DMap(parser.data)
       case _ =>
