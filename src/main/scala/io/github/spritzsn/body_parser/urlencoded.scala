@@ -1,10 +1,23 @@
 package io.github.spritzsn.body_parser
 
-import io.github.spritzsn.spritz.{DMap, HandlerResult, Machine, Request, RequestHandler2, Response, urlDecode}
+import io.github.spritzsn.spritz.{DMap, HandlerResult, Machine, RequestHandler, urlDecode}
 
 import scala.collection.mutable
 
-class FormParser extends Machine:
+def urlencoded(): RequestHandler =
+  (req, res) =>
+    req.headers get "content-type" match
+      case Some("application/x-www-form-urlencoded") =>
+        val parser = new BodyParser
+
+        decompress(req) foreach (b => parser.send(b))
+        parser.send(-1)
+        req.body = new DMap(parser.data)
+      case _ =>
+
+    HandlerResult.Next
+
+private class BodyParser extends Machine:
   val start: State = keyState
   var key: String = _
   val buf = new StringBuilder
@@ -38,16 +51,3 @@ class FormParser extends Machine:
       case '='  => parseError
       case c    => buf += c.toChar
     }
-
-def urlencoded(): RequestHandler2 =
-  (req: Request, res: Response) =>
-    req.headers get "content-type" match
-      case Some("application/x-www-form-urlencoded") =>
-        val parser = new FormParser
-
-        decompress(req) foreach (b => parser.send(b))
-        parser.send(-1)
-        req.body = new DMap(parser.data)
-      case _ =>
-
-    HandlerResult.Next

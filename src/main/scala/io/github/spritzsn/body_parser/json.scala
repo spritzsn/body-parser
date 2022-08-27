@@ -3,7 +3,7 @@ package io.github.spritzsn.body_parser
 import scala.annotation.tailrec
 import scala.collection.mutable.ListBuffer
 import scala.collection.mutable
-import io.github.spritzsn.spritz.{DMap, HandlerResult, RequestHandler2, Request, Response}
+import io.github.spritzsn.spritz.{DMap, HandlerResult, RequestHandler}
 
 import scala.collection.immutable
 import scala.collection.immutable.VectorMap
@@ -42,8 +42,8 @@ private val HEX = {
 
 private val EOI = '\uE000'
 
-def json(): RequestHandler2 =
-  (req: Request, res: Response) =>
+def json(): RequestHandler =
+  (req, res) =>
     req.headers get "content-type" match
       case Some("application/json") =>
         val json = new String(Codec.fromUTF8(decompress(req)))
