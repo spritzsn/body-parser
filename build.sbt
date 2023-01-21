@@ -1,10 +1,10 @@
 name := "body-parser"
 
-version := "0.0.8"
+version := "0.0.9"
 
 versionScheme := Some("early-semver")
 
-scalaVersion := "3.2.0"
+scalaVersion := "3.2.1"
 
 enablePlugins(ScalaNativePlugin)
 
@@ -40,7 +40,7 @@ homepage := Some(url("https://github.com/spritzn/" + name.value))
 //libraryDependencies += "org.scalatest" %%% "scalatest" % "3.2.13" % "test"
 
 libraryDependencies ++= Seq(
-  "io.github.spritzsn" %%% "spritz" % "0.0.43",
+  "io.github.spritzsn" %%% "spritz" % "0.0.47",
 )
 
 publishMavenStyle := true
